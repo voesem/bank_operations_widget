@@ -1,4 +1,5 @@
 from operator import itemgetter
+from datetime import datetime
 
 import json
 
@@ -21,3 +22,15 @@ def get_last_operations():
         operations_sorted = sorted(operations, key=itemgetter('date'), reverse=True)
 
         return operations_sorted[:5]
+
+
+def format_date_string(string):
+    """
+    Функция для приведения даты совершения операции к формату ДД.ММ.ГГГГ
+    :param string: строка, содержащая неформатированные дату и время совершения операции
+    :return: возвращает дату в формате ДД.ММ.ГГГГ
+    """
+    date_obj = datetime.strptime(string, '%Y-%m-%dT%H:%M:%S.%f')
+    date_string = date_obj.strftime('%d.%m.%Y')
+
+    return date_string

@@ -1,7 +1,7 @@
-from src.utils import get_last_operations, format_date_string, format_number
+from src.utils import load_operations, get_last_operations, format_date_string, format_number
 
 # вывод сообщений о последних пяти успешных операций клиента
-for i in get_last_operations():
+for i in get_last_operations(load_operations()):
     print(f'{format_date_string(i["date"])} {i["description"]}')
 
     if 'from' not in i.keys():

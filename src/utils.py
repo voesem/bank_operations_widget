@@ -1,27 +1,35 @@
-from operator import itemgetter
-from datetime import datetime
-
 import json
+import os
+from datetime import datetime
+from operator import itemgetter
 
 
-def get_last_operations():
+def load_operations():
     """
-    Функция для чтения файла operations.json и вывода
-    списка последних пяти успешных операций клиента
-    :return: возвращает список последних пяти успешных операций клиента
+    Функция для чтения файла operations.json
+    :return: возвращает данные файла operations.json
     """
-    with open('C:/Users/Владимир/PycharmProjects/bank_operations_widget/operations.json', encoding="utf-8") as f:
+    with open(os.path.join(os.path.dirname(__file__), 'operations.json'), encoding="utf-8") as f:
         operations_json = f.read()
 
         operations = json.loads(operations_json)
 
-        operations = [
-            operation for operation in operations if 'date' in operation.keys() and operation['state'] == 'EXECUTED'
-        ]
+        return operations
 
-        operations_sorted = sorted(operations, key=itemgetter('date'), reverse=True)
 
-        return operations_sorted[:5]
+def get_last_operations(operations):
+    """
+    Функция для вывода списка последних пяти успешных операций клиента
+    :param operations: на вход функции подается список словарей с операциями
+    :return: возвращает список последних пяти успешных операций клиента
+    """
+    operations = [
+        operation for operation in operations if 'date' in operation.keys() and operation['state'] == 'EXECUTED'
+    ]
+
+    operations_sorted = sorted(operations, key=itemgetter('date'), reverse=True)
+
+    return operations_sorted[:5]
 
 
 def format_date_string(string):

@@ -1,11 +1,11 @@
-from src.utils import get_last_operations, format_date_string, format_number
+from src.utils import load_operations, get_last_operations, format_date_string, format_number
 
 
 def test_get_last_operations():
     """
     Тест количества операций, которые выводит функция get_last_operations
     """
-    assert len(get_last_operations()) == 5
+    assert len(get_last_operations(load_operations())) == 5
 
 
 def test_format_date_string():
